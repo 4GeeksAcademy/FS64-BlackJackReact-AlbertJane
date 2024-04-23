@@ -1,6 +1,6 @@
 
 
-export const Dealer = ({deck}) => {
+export const Dealer = () => {
     
     return (
         <>

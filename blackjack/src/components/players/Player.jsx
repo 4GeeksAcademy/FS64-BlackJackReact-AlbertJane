@@ -1,10 +1,14 @@
+import {Cards} from '../Cards/Cards'
 
+export const Player = () => {
+    
 
-
-export const Player = ({deck}) => {
+ 
+    
     return (
         <>
-        dealer
+        
+            
         </>
     )
 }
