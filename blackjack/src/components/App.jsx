@@ -28,11 +28,11 @@ const getRandomNumber = (list) => {
 
 function App() {
 
-  const [playerHand,setPlayerHand] = useState([]);
-  const [dealerHand,setDealerHand] = useState([]);
-  const [playerPoints,setPlayerPoints] = useState(0);
+  const [playerHand, setPlayerHand] = useState([]);
+  const [dealerHand, setDealerHand] = useState([]);
+  const [playerPoints, setPlayerPoints] = useState(0);
   const [dealerPoints, setDealerPoints] = useState(0);
-
+  const [gameResults, setGameResults] = useState([0,0,0]);
 
  
   const resetGame = () => {
@@ -44,6 +44,7 @@ function App() {
     setDealerPoints(0);
     document.querySelector("#cards__dealer").innerHTML = "";
     document.querySelector("#cards__player").innerHTML = "";
+    document.querySelector("#result").innerHTML = "";
     initialHand();
   };
   
@@ -118,7 +119,8 @@ function App() {
         setPlayerPoints(newPlayerPoints);
 
         if (newPlayerPoints > 21) {
-          alert('Player busts! You lose :(');
+          document.querySelector('#result').innerHTML = 'Has Perdido! pulsa reset para seguir jugando';
+          gameResults[2]++;
           document.querySelector('#hit').disabled = true;
           document.querySelector('#stand').disabled = true;
           
@@ -163,23 +165,25 @@ function App() {
         
         
         if((playerPoints < 22 && playerPoints > dealerPointsCopy) || ( playerPoints < 22 && dealerPointsCopy > 21)){
-
+          gameResults[0]++;
           document.querySelector('#hit').disabled = true;
           document.querySelector('#stand').disabled = true;
-          setTimeout(()=>{alert('Has Ganado !')},1000);
+         
+          document.querySelector('#result').innerHTML = 'Felicidades has Ganado! pulsa reset para seguir jugando';
 
-        }else if((dealerPointsCopy < 21 && dealerPointsCopy > playerPoints) || playerPoints > 21 ){
-
+        }else if((dealerPointsCopy < 22 && dealerPointsCopy > playerPoints) || playerPoints > 21 ){
+          gameResults[2]++;
           document.querySelector('#hit').disabled = true;
           document.querySelector('#stand').disabled = true;
-           setTimeout(()=>{alert('Has perdido :(')},1000);
+          document.querySelector('#result').innerHTML = 'Has Perdido! pulsa reset para seguir jugando';
+           
 
         }else if((dealerPointsCopy < 21 && playerPoints < 21) && dealerPointsCopy === playerPoints){
-
+          gameResults[1]++;
           document.querySelector('#hit').disabled = true;
           document.querySelector('#stand').disabled = true;
-          setTimeout(()=>{alert('Push, almenos no has perdido')},1000);
-
+          
+          document.querySelector('#result').innerHTML = 'Empate! pulsa reset para seguir jugando';
         }
 
        
@@ -214,6 +218,9 @@ function App() {
               {dealerPoints}
             </div>
           </div>
+          <div id="result" className='text-white font-bold text-xl'>
+            
+          </div>
           <div className='flex gap-5 mb-2'>
           <div  id="cards__player" className='flex gap-5'>
             {playerCardsList}
@@ -229,8 +236,11 @@ function App() {
         <button id='hit' className='bg-green-500 px-5 py-2 rounded-lg text-white' onClick={handleHit}>Hit</button>
         <button id='stand' className='bg-orange-500 px-5 py-2 rounded-lg text-white' onClick={handleStand}>Stand</button>
         <button className='bg-blue-500 px-5 py-2 rounded-lg text-white' onClick={resetGame}>Reset</button>
-       
-
+     </div>
+     <div className=' w-screen h-50 fixed top-0 bg-slate-600 text-white flex justify-center gap-10'>
+      <p>Wins: {gameResults[0]}</p>
+      <p>Pushes: {gameResults[1]}</p>
+      <p>Defeats: {gameResults[2]}</p>
      </div>
      </>
   );
