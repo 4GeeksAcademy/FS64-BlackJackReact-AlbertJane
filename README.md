@@ -5,6 +5,7 @@
 Entra a la carpeta blackjack y ejecuta el servidor de pruebas
 ```
 cd blackjack/
+npm install
 npm run dev
 ```
 
